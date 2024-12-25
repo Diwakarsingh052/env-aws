@@ -30,7 +30,7 @@ COPY . .
 #RUN go mod tidy
 
 # Build the Go application
-RUN go build -o env-service .
+RUN go build -o env-aws .
 
 # Stage 2: Create a lightweight runtime image
 FROM alpine:latest
@@ -38,7 +38,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the compiled binary from the previous stage
-COPY --from=builder /app/env-service .
+COPY --from=builder /app/env-aws .
 
 
 # Copy the .env file into the container
@@ -47,4 +47,4 @@ COPY .env .
 
 EXPOSE 80
 # Command to run the application
-CMD ["./env-service"]
+CMD ["./env-aws"]
