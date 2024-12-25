@@ -1,0 +1,17 @@
+Option 1: Provide the .env file as a GitHub Actions secret
+Add the .env content as a GitHub Repository secret (ENV_FILE_CONTENT).
+Update your GitHub Actions pipeline with the following code:
+
+the below pipeline would fix the issue of passing the environment variables
+
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v3
+
+  # Create the `.env` file using the secret `ENV_FILE_CONTENT` added from GitHub repository secrets
+  - name: Create .env file
+    run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+
+  # Build the Docker image
+  - name: Build Docker image
+    run: docker build -t my-app .
